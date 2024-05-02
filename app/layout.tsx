@@ -9,7 +9,7 @@ const poppins = Poppins({
 
 export const metadata: Metadata = {
   title: "Yoom",
-  description: "Zoom clone built using Next.js and stream.",
+  description: "Zoom clone built using Next.js and Stream.",
 };
 
 export default function RootLayout({
@@ -19,7 +19,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={poppins.className}>{children}</body>
+      <body className={`${poppins.className} bg-dark-2 custom-scrollbar`}>
+        {children}
+      </body>
     </html>
   );
 }
