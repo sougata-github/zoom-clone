@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Poppins } from "next/font/google";
 import "./globals.css";
+import { ClerkProvider } from "@clerk/nextjs";
 
 const poppins = Poppins({
   subsets: ["latin"],
@@ -18,10 +19,26 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body className={`${poppins.className} bg-dark-2 custom-scrollbar`}>
-        {children}
-      </body>
-    </html>
+    <ClerkProvider
+      appearance={{
+        layout: {
+          logoImageUrl: "/icons/yoom-logo.svg",
+          socialButtonsVariant: "iconButton",
+        },
+        variables: {
+          colorText: "#fff",
+          colorPrimary: "#0E78F9",
+          colorBackground: "#1C1F2E",
+          colorInputBackground: "#252A41",
+          colorInputText: "#FFF",
+        },
+      }}
+    >
+      <html lang="en">
+        <body className={`${poppins.className} bg-dark-2 custom-scrollbar`}>
+          {children}
+        </body>
+      </html>
+    </ClerkProvider>
   );
 }
