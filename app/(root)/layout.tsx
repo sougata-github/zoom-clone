@@ -1,10 +1,10 @@
 import StreamVideoProvider from "@/providers/StreamClientProvider";
 
-const RoomLayout = ({ children }: { children: React.ReactNode }) => {
+const RoomLayout = ({ children }: Readonly<{ children: React.ReactNode }>) => {
   return (
-    <>
+    <main>
       <StreamVideoProvider>{children}</StreamVideoProvider>
-    </>
+    </main>
   );
 };
 
