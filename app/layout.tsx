@@ -1,7 +1,12 @@
 import type { Metadata } from "next";
 import { Poppins } from "next/font/google";
 import "./globals.css";
+
 import { ClerkProvider } from "@clerk/nextjs";
+
+import { Toaster } from "@/components/ui/toaster";
+
+import "@stream-io/video-react-sdk/dist/css/styles.css";
 
 const poppins = Poppins({
   subsets: ["latin"],
@@ -37,6 +42,7 @@ export default function RootLayout({
       <html lang="en">
         <body className={`${poppins.className} bg-dark-2 custom-scrollbar`}>
           {children}
+          <Toaster />
         </body>
       </html>
     </ClerkProvider>
