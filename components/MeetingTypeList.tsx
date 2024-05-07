@@ -39,6 +39,7 @@ const MeetingTypeList = () => {
         return;
       }
 
+      //call id
       const id = crypto.randomUUID();
       //from stream docs
       const call = client.call("default", id);

@@ -51,7 +51,6 @@ const MeetingSetup = ({
         className="rounded-md bg-green-500 px-4 py-2.5 hover:bg-green-500"
         onClick={() => {
           call.join();
-
           setIsSetupComplete(true);
         }}
       >

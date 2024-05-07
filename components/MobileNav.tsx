@@ -13,6 +13,7 @@ import { usePathname } from "next/navigation";
 
 import { sidebarLinks } from "@/constants";
 import { cn } from "@/lib/utils";
+import { Video } from "lucide-react";
 
 const MobileNav = () => {
   const pathname = usePathname();
@@ -31,14 +32,8 @@ const MobileNav = () => {
         </SheetTrigger>
         <SheetContent side="left" className="border-none bg-dark-1">
           <Link href="/" className="flex items-center gap-1">
-            <Image
-              src="/icons/logo.svg"
-              width={32}
-              height={32}
-              alt="Yoom logo"
-              className="max-sm:size-10"
-            />
-            <p className="text-[26px] font-extrabold text-white">Yoom</p>
+            <Video className="text-white h-8 w-8 mr-2" />
+            <p className="text-[26px] font-extrabold text-blue-1">Yoom</p>
           </Link>
           <ul className="flex h-[calc(100vh-72px)] flex-col justify-between overflow-y-auto">
             <section className="flex h-full flex-col gap-6 pt-16 text-white">

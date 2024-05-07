@@ -39,6 +39,21 @@
   height: 100%;
 }
 
+/* .str-video__participant-list::-webkit-scrollbar {
+  width: 5px;
+  border-radius: 2px;
+}
+
+.str-video__participant-list::-webkit-scrollbar-track {
+  background: transparent;
+  border-radius: 50px;
+}
+
+.str-video__participant-list::-webkit-scrollbar-thumb {
+  background-color: #7e7e7e;
+  border-radius: 50px;
+} */
+
 .str-video__call-controls__button {
   height: 40px;
 }

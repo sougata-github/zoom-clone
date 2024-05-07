@@ -26,7 +26,7 @@ const Page = ({ params }: { params: { id: string } }) => {
           {!isSetupComplete ? (
             <MeetingSetup setIsSetupComplete={setIsSetupComplete} />
           ) : (
-            <MeetingRoom />
+            <MeetingRoom id={params.id} />
           )}
         </StreamTheme>
       </StreamCall>
