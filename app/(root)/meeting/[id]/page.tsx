@@ -19,6 +19,13 @@ const Page = ({ params }: { params: { id: string } }) => {
 
   if (!isLoaded || isCallLoading) return <Loader />;
 
+  if (!call)
+    return (
+      <p className="text-center text-3xl font-bold text-white">
+        Call Not Found
+      </p>
+    );
+
   return (
     <main className="h-screen w-full">
       <StreamCall call={call}>

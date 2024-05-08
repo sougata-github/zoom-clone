@@ -2,12 +2,10 @@ import { useCall, useCallStateHooks } from "@stream-io/video-react-sdk";
 
 import { Button } from "./ui/button";
 import { useRouter } from "next/navigation";
+import { useToast } from "./ui/use-toast";
 
-const EndCallButton = ({
-  setCallHasEnded,
-}: {
-  setCallHasEnded: (value: boolean) => void;
-}) => {
+const EndCallButton = () => {
+  const { toast } = useToast();
   const router = useRouter();
 
   const call = useCall();
@@ -26,8 +24,10 @@ const EndCallButton = ({
     <Button
       onClick={async () => {
         await call.endCall();
-        setCallHasEnded(true);
         router.push("/");
+        toast({
+          title: "You have ended the meeting.",
+        });
       }}
       className="bg-red-500 hover:bg-red-400 transition-all"
     >
