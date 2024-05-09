@@ -9,6 +9,8 @@ import { Call, useStreamVideoClient } from "@stream-io/video-react-sdk";
 
 import HomeCard from "./HomeCard";
 import MeetingModal from "./MeetingModal";
+import { Textarea } from "./ui/textarea";
+import ReactDatePicker from "react-datepicker";
 
 const MeetingTypeList = () => {
   const router = useRouter();
@@ -51,6 +53,23 @@ const MeetingTypeList = () => {
 
       const description = values.description || "Instant meeting";
 
+      if (
+        values.dateTime < new Date(Date.now()) &&
+        meetingState === "isScheduleMeeting"
+      ) {
+        toast({
+          title: "Cannot schedule a meeting in the past!",
+        });
+        return;
+      }
+
+      if (!values.description && meetingState === "isScheduleMeeting") {
+        toast({
+          title: "Please provide a meeting description!",
+        });
+        return;
+      }
+
       await call.getOrCreate({
         data: {
           starts_at: startsAt,
@@ -62,7 +81,7 @@ const MeetingTypeList = () => {
 
       setCallDetails(call);
 
-      if (!values.description) {
+      if (!values.description && meetingState === "isInstantMeeting") {
         router.push(`/meeting/${call.id}`);
       }
 
@@ -76,6 +95,8 @@ const MeetingTypeList = () => {
       });
     }
   };
+
+  const meetingLink = `${process.env.NEXT_PUBLIC_BASE_URL}/meeting/${callDetails?.id}`;
 
   return (
     <section className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-5">
@@ -116,8 +137,61 @@ const MeetingTypeList = () => {
         buttonText="Start Meeting"
         handleClick={createMeeting}
       />
+
+      {!callDetails ? (
+        <MeetingModal
+          isOpen={meetingState === "isScheduleMeeting"}
+          onClose={() => setMeetingState(undefined)}
+          title="Create Meeting"
+          className="text-center"
+          handleClick={createMeeting}
+        >
+          <div className="flex flex-col gap-2.5">
+            <label className="text-base text-normal leading-[22px] text-sky-2">
+              Add a description
+            </label>
+            <Textarea
+              className="border-none bg-dark-2 focus-visible:ring-0 focus-visible:ring-offset-0"
+              onChange={(e) => {
+                setValues({ ...values, description: e.target.value });
+              }}
+            />
+            <div className="flex w-full flex-col gap-2.5">
+              <label>Select Date and Time</label>
+              <ReactDatePicker
+                selected={values.dateTime}
+                onChange={(date) => setValues({ ...values, dateTime: date! })}
+                showTimeSelect
+                timeFormat="HH::mm"
+                timeIntervals={15}
+                timeCaption="time"
+                dateFormat="MMMM d, yyyy h:mm aa"
+                className="cursor-pointer w-full rounded bg-dark-2 p-2 focus:outline-none"
+              />
+            </div>
+          </div>
+        </MeetingModal>
+      ) : (
+        <MeetingModal
+          isOpen={meetingState === "isScheduleMeeting"}
+          onClose={() => setMeetingState(undefined)}
+          title="Meeting Created"
+          className="text-center"
+          buttonText="Copy Meeting Link"
+          handleClick={() => {
+            navigator.clipboard.writeText(meetingLink);
+            toast({
+              title: "Link Copied",
+            });
+          }}
+          image="/icons/checked.svg"
+          buttonIcon="/icons/copy.svg"
+        />
+      )}
     </section>
   );
 };
 
 export default MeetingTypeList;
+
+/**Call state problem, cannot start an instant after scheduling a meeting. */
