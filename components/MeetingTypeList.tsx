@@ -81,7 +81,7 @@ const MeetingTypeList = () => {
 
       setCallDetails(call);
 
-      if (!values.description && meetingState === "isInstantMeeting") {
+      if (meetingState === "isInstantMeeting") {
         router.push(`/meeting/${call.id}`);
       }
 
@@ -174,7 +174,9 @@ const MeetingTypeList = () => {
       ) : (
         <MeetingModal
           isOpen={meetingState === "isScheduleMeeting"}
-          onClose={() => setMeetingState(undefined)}
+          onClose={() => {
+            setMeetingState(undefined);
+          }}
           title="Meeting Created"
           className="text-center"
           buttonText="Copy Meeting Link"
@@ -193,5 +195,3 @@ const MeetingTypeList = () => {
 };
 
 export default MeetingTypeList;
-
-/**Call state problem, cannot start an instant after scheduling a meeting. */
