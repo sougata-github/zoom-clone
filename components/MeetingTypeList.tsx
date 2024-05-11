@@ -16,11 +16,12 @@ const MeetingTypeList = () => {
   const router = useRouter();
   const { user } = useUser();
   const { toast } = useToast();
+
   const client = useStreamVideoClient();
 
   const [meetingState, setMeetingState] = useState<
     "isScheduleMeeting" | "isJoiningMeeting" | "isInstantMeeting" | undefined
-  >();
+  >(undefined);
 
   const [values, setValues] = useState({
     dateTime: new Date(),
@@ -54,7 +55,7 @@ const MeetingTypeList = () => {
       const description = values.description || "Instant meeting";
 
       if (
-        values.dateTime < new Date(Date.now()) &&
+        new Date(values.dateTime) < new Date(Date.now() - 1000 * 60) &&
         meetingState === "isScheduleMeeting"
       ) {
         toast({
@@ -162,8 +163,8 @@ const MeetingTypeList = () => {
                 selected={values.dateTime}
                 onChange={(date) => setValues({ ...values, dateTime: date! })}
                 showTimeSelect
-                timeFormat="HH::mm"
-                timeIntervals={15}
+                timeFormat="HH:mm"
+                timeIntervals={1}
                 timeCaption="time"
                 dateFormat="MMMM d, yyyy h:mm aa"
                 className="cursor-pointer w-full rounded bg-dark-2 p-2 focus:outline-none"

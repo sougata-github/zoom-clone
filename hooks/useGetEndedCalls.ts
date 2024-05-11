@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useUser } from "@clerk/nextjs";
 import { Call, useStreamVideoClient } from "@stream-io/video-react-sdk";
 
-export const useGetUpcomingCalls = () => {
+export const useGetEndedCalls = () => {
   const { user } = useUser();
   const client = useStreamVideoClient();
   const [calls, setCalls] = useState<Call[]>();
@@ -18,7 +18,7 @@ export const useGetUpcomingCalls = () => {
         const { calls } = await client.queryCalls({
           sort: [{ field: "starts_at", direction: -1 }],
           filter_conditions: {
-            starts_at: { $exists: true },
+            ended_at: { $exists: true },
             $or: [
               { created_by_user_id: user.id },
               { members: { $in: [user.id] } },
@@ -38,13 +38,9 @@ export const useGetUpcomingCalls = () => {
 
   const now = new Date();
 
-  const upcomingCalls = calls?.filter(({ state: { startsAt } }: Call) => {
-    return startsAt && new Date(startsAt) > now;
+  const endedCalls = calls?.filter(({ state: { startsAt, endedAt } }: Call) => {
+    return (startsAt && new Date(startsAt) < now) || !!endedAt;
   });
 
-  return {
-    upcomingCalls,
-    callRecordings: calls,
-    isLoadingUpcomingCalls: isLoading,
-  };
+  return { endedCalls, isLoadingEndedCalls: isLoading };
 };
