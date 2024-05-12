@@ -21,9 +21,11 @@ const Page = ({ params }: { params: { id: string } }) => {
 
   if (!call)
     return (
-      <p className="text-center text-3xl font-bold text-white">
-        Call Not Found
-      </p>
+      <div className="h-full flex items-center justify-center">
+        <p className="text-center text-3xl font-bold text-white">
+          Call Not Found
+        </p>
+      </div>
     );
 
   return (

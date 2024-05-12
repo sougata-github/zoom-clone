@@ -25,7 +25,7 @@ const Table = ({
       <h1 className="text-lg font-bold text-blue-1 lg:text-xl xl:min-w-32">
         {title}
       </h1>
-      <h1 className="truncate text-sm font-semibold max-sm:max-w-[320px] lg:text-lg lowercase">
+      <h1 className="flex truncate text-sm w-[300px] font-semibold max-sm:max-w-[300px] lg:text-lg">
         {description}
       </h1>
       {children}
@@ -70,7 +70,7 @@ const Page = () => {
   };
 
   return (
-    <section className="flex size-full flex-col gap-10 text-white">
+    <section className="flex size-full flex-col gap-10 text-white overflow-x-hidden">
       <h1 className="text-3xl font-bold">Personal Room</h1>
       <div className="flex w-full flex-col gap-8 xl:max-w-[900px]">
         <Table
@@ -78,29 +78,27 @@ const Page = () => {
           description={`${user?.firstName}'s Meeting Room`}
         />
         {/* <Table title="Meeting ID:" description={`${meetingId}`} /> */}
-        <Table title="Invite Link:">
-          <Button
-            className="rounded-lg bg-[#19232d] px-4 py-2 hover:bg-[#4c535b] transition-all"
-            onClick={onCopy}
-          >
-            {copied ? (
-              <>
-                <Check className="mr-2 h-4 w-4" />
-                Copied
-              </>
-            ) : (
-              <>
-                <Copy className="mr-2 h-4 w-4" />
-                Copy Invite Link
-              </>
-            )}
-          </Button>
-        </Table>
       </div>
 
       <div className="flex gap-5">
         <Button className="bg-blue-1 hover:bg-blue-1" onClick={startRoom}>
           Start Meeting
+        </Button>
+        <Button
+          className="rounded-lg bg-[#19232d] px-4 py-2 hover:bg-[#4c535b] transition-all"
+          onClick={onCopy}
+        >
+          {copied ? (
+            <>
+              <Check className="mr-2 h-4 w-4" />
+              Copied
+            </>
+          ) : (
+            <>
+              <Copy className="mr-2 h-4 w-4" />
+              Copy Invite Link
+            </>
+          )}
         </Button>
       </div>
     </section>
