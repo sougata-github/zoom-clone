@@ -41,5 +41,5 @@ export const useGetEndedCalls = () => {
     return (startsAt && new Date(startsAt) < now) || !!endedAt;
   });
 
-  return { endedCalls: calls, isLoadingEndedCalls: isLoading };
+  return { endedCalls, isLoadingEndedCalls: isLoading };
 };

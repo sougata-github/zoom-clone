@@ -9,6 +9,8 @@ import { Check, Copy } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
 
+const randomId = crypto.randomUUID();
+
 const Table = ({
   title,
   description,
@@ -36,10 +38,12 @@ const Page = () => {
 
   const router = useRouter();
 
-  const { call } = useGetCallById(user?.id!);
+  const meetingId = `${user?.firstName}_${randomId}`;
+
+  const { call } = useGetCallById(meetingId);
   const client = useStreamVideoClient();
 
-  const meetingLink = `${process.env.NEXT_PUBLIC_BASE_URL}/meeting/${user?.id}?personal=true`;
+  const meetingLink = `${process.env.NEXT_PUBLIC_BASE_URL}/meeting/${meetingId}?personal=true`;
   const [copied, setIsCopied] = useState(false);
 
   const onCopy = () => {
@@ -54,7 +58,7 @@ const Page = () => {
     if (!client || !user) return;
 
     if (!call) {
-      const newCall = client.call("default", user?.id);
+      const newCall = client.call("default", meetingId!);
       await newCall.getOrCreate({
         data: {
           starts_at: new Date().toISOString(),
@@ -62,7 +66,7 @@ const Page = () => {
       });
     }
 
-    router.push(`/meeting/${user?.id}?personal=true`);
+    router.push(`/meeting/${meetingId}?personal=true`);
   };
 
   return (
@@ -73,7 +77,7 @@ const Page = () => {
           title="Topic:"
           description={`${user?.firstName}'s Meeting Room`}
         />
-        <Table title="Meeting ID:" description={`${user?.id}`} />
+        {/* <Table title="Meeting ID:" description={`${meetingId}`} /> */}
         <Table title="Invite Link:">
           <Button
             className="rounded-lg bg-[#19232d] px-4 py-2 hover:bg-[#4c535b] transition-all"
