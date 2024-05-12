@@ -7,6 +7,7 @@ import {
   CallingState,
   PaginatedGridLayout,
   SpeakerLayout,
+  useCall,
   useCallStateHooks,
 } from "@stream-io/video-react-sdk";
 
@@ -29,7 +30,7 @@ import { cn } from "@/lib/utils";
 
 type CallLayoutType = "grid" | "speaker-left" | "speaker-right";
 
-const MeetingRoom = ({ id }: { id: string }) => {
+const MeetingRoom = ({ id, user }: { id: string; user: any }) => {
   const router = useRouter();
   const searchParams = useSearchParams();
   const isPersonalRoom = !!searchParams.get("personal");
@@ -43,6 +44,8 @@ const MeetingRoom = ({ id }: { id: string }) => {
   const callingState = useCallCallingState();
 
   const url = `${window.origin}/meeting/${id}`;
+
+  const call = useCall();
 
   const onCopy = () => {
     navigator.clipboard.writeText(url);
@@ -63,8 +66,17 @@ const MeetingRoom = ({ id }: { id: string }) => {
     }
   };
 
+  const updateMemberList = async () => {
+    await call?.updateCallMembers({ update_members: [{ user_id: user?.id }] });
+  };
+
   useEffect(() => {
     if (callingState === CallingState.LEFT) return redirect("/");
+
+    if (callingState === CallingState.JOINED) {
+      updateMemberList();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [callingState]);
 
   return (

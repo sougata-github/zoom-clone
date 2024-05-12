@@ -1,8 +1,9 @@
 import { useCall, useCallStateHooks } from "@stream-io/video-react-sdk";
 
 import { Button } from "./ui/button";
-import { useRouter } from "next/navigation";
+
 import { useToast } from "./ui/use-toast";
+import { useRouter } from "next/navigation";
 
 const EndCallButton = () => {
   const { toast } = useToast();

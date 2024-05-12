@@ -18,7 +18,6 @@ export const useGetEndedCalls = () => {
         const { calls } = await client.queryCalls({
           sort: [{ field: "starts_at", direction: -1 }],
           filter_conditions: {
-            ended_at: { $exists: true },
             $or: [
               { created_by_user_id: user.id },
               { members: { $in: [user.id] } },
@@ -42,5 +41,5 @@ export const useGetEndedCalls = () => {
     return (startsAt && new Date(startsAt) < now) || !!endedAt;
   });
 
-  return { endedCalls, isLoadingEndedCalls: isLoading };
+  return { endedCalls: calls, isLoadingEndedCalls: isLoading };
 };

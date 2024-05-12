@@ -19,7 +19,6 @@ const StreamVideoProvider = ({ children }: { children: React.ReactNode }) => {
     if (!isLoaded || !user) return;
     if (!apiKey) throw new Error("Stream Api key missing!");
 
-    //@ts-ignore
     const client = new StreamVideoClient({
       apiKey,
       user: {
