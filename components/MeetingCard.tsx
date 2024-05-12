@@ -31,6 +31,14 @@ const MeetingCard = ({
 }: MeetingCardProps) => {
   const { toast } = useToast();
 
+  const time = new Date(date).toLocaleTimeString("en-US", {
+    hour: "2-digit",
+    minute: "2-digit",
+  });
+  const meetingDate = new Intl.DateTimeFormat("en-US", {
+    dateStyle: "medium",
+  }).format(new Date(date));
+
   return (
     <section className="flex min-h-[258px] w-full flex-col justify-between rounded-[14px] bg-dark-1 px-5 py-8 xl:max-w-[568px]">
       <article className="flex flex-col gap-5">
@@ -38,7 +46,9 @@ const MeetingCard = ({
         <div className="flex justify-between">
           <div className="flex flex-col gap-2">
             <h1 className="text-lg sm:text-2xl font-bold">{title}</h1>
-            <p className="text-base font-normal">{date}</p>
+            <p className="text-base font-normal">
+              {meetingDate} <span className="font-bold">{time}</span>
+            </p>
           </div>
         </div>
       </article>

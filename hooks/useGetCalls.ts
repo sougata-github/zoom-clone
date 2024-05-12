@@ -38,9 +38,11 @@ export const useGetUpcomingCalls = () => {
 
   const now = new Date();
 
-  const upcomingCalls = calls?.filter(({ state: { startsAt } }: Call) => {
-    return startsAt && new Date(startsAt) > now;
-  });
+  const upcomingCalls = calls?.filter(
+    ({ state: { startsAt, endedAt } }: Call) => {
+      return startsAt && new Date(startsAt) > now && !endedAt;
+    }
+  );
 
   return {
     upcomingCalls,

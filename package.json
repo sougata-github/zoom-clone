@@ -18,6 +18,8 @@
     "@stream-io/video-react-sdk": "^0.6.19",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
+    "lodash": "^4.17.21",
+    "lodash.debounce": "^4.0.8",
     "lucide-react": "^0.376.0",
     "next": "14.2.3",
     "react": "^18",
@@ -27,6 +29,7 @@
     "tailwindcss-animate": "^1.0.7"
   },
   "devDependencies": {
+    "@types/lodash.debounce": "^4.0.9",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-datepicker": "^6.2.0",
