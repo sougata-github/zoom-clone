@@ -13,6 +13,7 @@ import { Textarea } from "./ui/textarea";
 import { Input } from "./ui/input";
 
 import ReactDatePicker from "react-datepicker";
+import { extractPath } from "@/lib/utils";
 
 const MeetingTypeList = () => {
   const router = useRouter();
@@ -200,7 +201,7 @@ const MeetingTypeList = () => {
         title="Type the link here"
         className="text-center"
         buttonText="Join Meeting"
-        handleClick={() => redirect(values.link)}
+        handleClick={() => router.push(extractPath(values.link!))}
       >
         <Input
           placeholder="Meeting Link"
