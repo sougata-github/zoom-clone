@@ -10,7 +10,7 @@ import { useToast } from "./ui/use-toast";
 
 interface MeetingCardProps {
   title: string;
-  date: string;
+  date: string | Date;
   icon: string;
   isPreviousMeeting?: boolean;
   buttonIcon1?: string;
