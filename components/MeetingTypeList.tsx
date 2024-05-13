@@ -44,9 +44,7 @@ const MeetingTypeList = () => {
         return;
       }
 
-      //call id
       const id = crypto.randomUUID();
-      //from stream docs
       const call = client.call("default", id);
 
       if (!call) throw new Error("Failed to create call");
